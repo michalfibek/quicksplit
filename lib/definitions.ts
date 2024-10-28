@@ -20,13 +20,16 @@ export const BillSchema = z.object({
   currency: z.string().min(3).max(3),
   exchangeRate: z.number().positive().optional(),
   paidBy: PersonSchema,
-  sharedWith: z.array(PersonSchema),
+  sharedWith: z.array(PersonSchema).min(1),
 });
 
 export const BillSchemaRaw = BillSchema.extend({
-  id: z.string().uuid().optional(),
   paidBy: z.string().uuid(),
-  sharedWith: z.array(z.string()),
+  sharedWith: z.array(z.string()).min(1),
+}).omit({ id: true });
+
+export const BillSchemaRawInput = BillSchemaRaw.extend({
+  amount: z.union([z.number(), z.string()]),
 });
 
 export type Bill = z.infer<typeof BillSchema>;

@@ -3,7 +3,7 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { Bill } from "@/lib/definitions";
 import { ArrowUpDown } from "lucide-react";
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 
 // const CUR_LOCALE = "en-US";
 const CUR_LOCALE = "cz-CZ";

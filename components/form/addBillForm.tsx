@@ -24,7 +24,11 @@ import {
 } from "@/components/ui/select";
 
 import { Input } from "@/components/ui/input";
-import { BillSchema, BillSchemaRaw } from "@/lib/definitions";
+import {
+  BillSchema,
+  BillSchemaRaw,
+  BillSchemaRawInput,
+} from "@/lib/definitions";
 import Link from "next/link";
 import {
   getCurrencies,
@@ -38,12 +42,9 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { DateTimePicker } from "../ui/datetime-picker";
-import { CalendarIcon } from "@radix-ui/react-icons";
-import { Calendar } from "@/components/ui/calendar";
-import { cn } from "@/lib/utils";
-import { useFormStatus } from "react-dom";
 import { Checkbox } from "../ui/checkbox";
 import { useEffect } from "react";
+import { createBill } from "@/lib/actions";
 
 export function AddBillForm() {
   const peopleList = getPeople();
@@ -51,7 +52,7 @@ export function AddBillForm() {
   const userSettings = getUserSettings();
   const groupSettings = getGroupSettings();
 
-  const form = useForm<z.infer<typeof BillSchemaRaw>>({
+  const form = useForm<z.infer<typeof BillSchemaRawInput>>({
     resolver: zodResolver(BillSchemaRaw),
     defaultValues: {
       description: "",
@@ -76,13 +77,9 @@ export function AddBillForm() {
   //   }
   // }
 
-  async function onSubmit(values: z.infer<typeof BillSchemaRaw>) {
-    // console.log(values);
-    const parsedValues = BillSchemaRaw.safeParse(values);
-    if (parsedValues.success) {
-      console.log(parsedValues);
-    } else {
-    }
+  async function onSubmit(values: z.infer<typeof BillSchemaRawInput>) {
+    const data = JSON.parse(JSON.stringify(values));
+    createBill(data);
   }
 
   return (
