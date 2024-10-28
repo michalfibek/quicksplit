@@ -31,7 +31,7 @@ export function getBills(): Bill[] {
   return [
     {
       id: "6972b464-26d6-469c-a301-e7795e08778b",
-      date: "2024-01-02T00:00:00Z",
+      date: new Date("2024-01-02T00:00:00Z"),
       description: "Wallmart",
       amount: 120,
       currency: "CZK",
@@ -41,7 +41,7 @@ export function getBills(): Bill[] {
     },
     {
       id: "55e97f9d-50d1-4bd2-be72-72a72bdeec6c",
-      date: "2020-01-03T00:00:00Z",
+      date: new Date("2020-01-03T00:00:00Z"),
       description: "Tesco",
       amount: 230,
       currency: "CZK",
@@ -51,7 +51,7 @@ export function getBills(): Bill[] {
     },
     {
       id: "d87ef686-43a4-4e9f-9f89-f2657fc977e3",
-      date: "2024-01-04T00:00:00Z",
+      date: new Date("2024-01-04T00:00:00Z"),
       description: "Lunch",
       amount: 230,
       currency: "USD",
