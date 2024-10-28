@@ -10,13 +10,25 @@ export type Person = z.infer<typeof PersonSchema>;
 
 export const BillSchema = z.object({
   id: z.string().uuid(),
-  date: z.string().datetime(),
-  description: z.string(),
-  amount: z.number().positive(),
+  date: z.coerce.date(),
+  // date: z.coerce.date().refine((data) => {
+  //   console.log(data);
+  //   console.log(JSON.stringify(data));
+  // }),
+  description: z.string().optional(),
+  amount: z.coerce.number().positive(),
   currency: z.string().min(3).max(3),
   exchangeRate: z.number().positive().optional(),
-  payer: PersonSchema,
-  owedBy: z.array(PersonSchema),
+  paidBy: PersonSchema,
+  sharedWith: z.array(PersonSchema),
+});
+
+export const BillSchemaRaw = BillSchema.extend({
+  paidBy: z.string().uuid(),
 });
 
 export type Bill = z.infer<typeof BillSchema>;
+
+export type GroupSettings = {
+  baseCurrency: string;
+};
