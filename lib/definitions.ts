@@ -24,11 +24,14 @@ export const BillSchema = z.object({
 });
 
 export const BillSchemaRaw = BillSchema.extend({
+  id: z.string().uuid().optional(),
   paidBy: z.string().uuid(),
+  sharedWith: z.array(z.string()),
 });
 
 export type Bill = z.infer<typeof BillSchema>;
 
 export type GroupSettings = {
   baseCurrency: string;
+  people: Person[];
 };

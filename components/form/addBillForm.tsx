@@ -42,6 +42,8 @@ import { CalendarIcon } from "@radix-ui/react-icons";
 import { Calendar } from "@/components/ui/calendar";
 import { cn } from "@/lib/utils";
 import { useFormStatus } from "react-dom";
+import { Checkbox } from "../ui/checkbox";
+import { useEffect } from "react";
 
 export function AddBillForm() {
   const peopleList = getPeople();
@@ -57,19 +59,25 @@ export function AddBillForm() {
       paidBy: userSettings.currentUser.id,
       currency: groupSettings.baseCurrency,
       amount: "",
-      sharedWith: null,
+      sharedWith: [userSettings.currentUser.id],
     },
   });
 
-  // const { pending } = useFormStatus();
+  useEffect(() => {
+    form.setFocus("amount");
+  }, [form]);
 
-  // useEffect(() => {
-  //   form.setFocus("amount");
-  //   // form.setValue("description", "");
-  // }, [form]);
+  function handlePaidByChange(value: string) {
+    const sharedWithOrig = form.getValues().sharedWith;
+    if (!sharedWithOrig.includes(value) && sharedWithOrig.length > 1) {
+      form.setValue("sharedWith", [...sharedWithOrig, value]);
+    } else {
+      form.setValue("sharedWith", [value]);
+    }
+  }
 
   async function onSubmit(values: z.infer<typeof BillSchemaRaw>) {
-    console.log(values);
+    // console.log(values);
     const parsedValues = BillSchemaRaw.safeParse(values);
     if (parsedValues.success) {
       console.log(parsedValues);
@@ -86,7 +94,13 @@ export function AddBillForm() {
           render={({ field }) => (
             <FormItem>
               <FormLabel>Paid by</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                onValueChange={(value) => {
+                  field.onChange(value);
+                  handlePaidByChange(value);
+                }}
+                value={field.value}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue placeholder="(choose one)" />
@@ -104,6 +118,7 @@ export function AddBillForm() {
             </FormItem>
           )}
         />
+
         <div className="flex flex-col sm:flex-row">
           <div className="sm:basis-2/3">
             <FormField
@@ -148,6 +163,7 @@ export function AddBillForm() {
             />
           </div>
         </div>
+
         <FormField
           control={form.control}
           name="description"
@@ -175,6 +191,56 @@ export function AddBillForm() {
             </FormItem>
           )}
         />
+
+        <FormField
+          control={form.control}
+          name="sharedWith"
+          render={() => (
+            <FormItem>
+              <div className="mb-4">
+                <FormLabel className="text-base">Shared with</FormLabel>
+                {/* <FormDescription>
+                  Select the people you share this bill with.
+                </FormDescription> */}
+              </div>
+              {groupSettings.people.map((person) => (
+                <FormField
+                  key={person.id}
+                  control={form.control}
+                  name="sharedWith"
+                  render={({ field }) => {
+                    return (
+                      <FormItem
+                        key={person.id}
+                        className="flex flex-row items-start space-x-3 space-y-0"
+                      >
+                        <FormControl>
+                          <Checkbox
+                            checked={field.value?.includes(person.id)}
+                            onCheckedChange={(checked) => {
+                              return checked
+                                ? field.onChange([...field.value, person.id])
+                                : field.onChange(
+                                    field.value?.filter(
+                                      (value) => value !== person.id
+                                    )
+                                  );
+                            }}
+                          />
+                        </FormControl>
+                        <FormLabel className="text-sm font-normal">
+                          {person.name}
+                        </FormLabel>
+                      </FormItem>
+                    );
+                  }}
+                />
+              ))}
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button type="submit" className="w-full">
           Add bill
         </Button>
