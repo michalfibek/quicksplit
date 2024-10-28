@@ -8,12 +8,12 @@ import {
   CardTitle,
 } from "./ui/card";
 
-interface CardBoxProps {
+type CardBoxProps = {
   title: ReactNode;
   description: ReactNode;
   footer: ReactNode;
   children: ReactNode;
-}
+};
 
 export function CardBox({
   title,
