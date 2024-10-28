@@ -59,7 +59,7 @@ export function AddBillForm() {
       paidBy: userSettings.currentUser.id,
       currency: groupSettings.baseCurrency,
       amount: "",
-      sharedWith: [userSettings.currentUser.id],
+      sharedWith: peopleList.map((person) => person.id),
     },
   });
 
@@ -67,14 +67,14 @@ export function AddBillForm() {
     form.setFocus("amount");
   }, [form]);
 
-  function handlePaidByChange(value: string) {
-    const sharedWithOrig = form.getValues().sharedWith;
-    if (!sharedWithOrig.includes(value) && sharedWithOrig.length > 1) {
-      form.setValue("sharedWith", [...sharedWithOrig, value]);
-    } else {
-      form.setValue("sharedWith", [value]);
-    }
-  }
+  // function handlePaidByChange(value: string) {
+  //   const sharedWithOrig = form.getValues().sharedWith;
+  //   if (!sharedWithOrig.includes(value) && sharedWithOrig.length > 1) {
+  //     form.setValue("sharedWith", [...sharedWithOrig, value]);
+  //   } else {
+  //     form.setValue("sharedWith", [value]);
+  //   }
+  // }
 
   async function onSubmit(values: z.infer<typeof BillSchemaRaw>) {
     // console.log(values);
@@ -97,7 +97,7 @@ export function AddBillForm() {
               <Select
                 onValueChange={(value) => {
                   field.onChange(value);
-                  handlePaidByChange(value);
+                  // handlePaidByChange(value);
                 }}
                 value={field.value}
               >
