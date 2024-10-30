@@ -28,6 +28,8 @@ import {
   BillSchema,
   BillSchemaRaw,
   BillSchemaRawInput,
+  Person,
+  Persons,
 } from "@/lib/definitions";
 import Link from "next/link";
 import {
@@ -43,11 +45,17 @@ import {
 } from "@/components/ui/popover";
 import { DateTimePicker } from "../ui/datetime-picker";
 import { Checkbox } from "../ui/checkbox";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { createBill } from "@/lib/actions";
+import { fetchGroupPersons } from "@/lib/data";
 
-export function AddBillForm() {
-  const peopleList = getPeople();
+type AddBillFormProps = {
+  personsList: Persons;
+};
+
+export function AddBillForm({ personsList }: AddBillFormProps) {
+  console.log(personsList);
+  // const peopleList = getPeople();
   const currencyList = getCurrencies();
   const userSettings = getUserSettings();
   const groupSettings = getGroupSettings();
@@ -60,7 +68,7 @@ export function AddBillForm() {
       paidBy: userSettings.currentUser.id,
       currency: groupSettings.baseCurrency,
       amount: "",
-      sharedWith: peopleList.map((person) => person.id),
+      sharedWith: personsList.map((person: Person) => person.id),
     },
   });
 
@@ -104,7 +112,7 @@ export function AddBillForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {peopleList.map((person) => (
+                  {personsList.map((person: Person) => (
                     <SelectItem key={person.id} value={person.id}>
                       {person.name}
                     </SelectItem>
@@ -200,7 +208,7 @@ export function AddBillForm() {
                   Select the people you share this bill with.
                 </FormDescription> */}
               </div>
-              {groupSettings.people.map((person) => (
+              {personsList.map((person) => (
                 <FormField
                   key={person.id}
                   control={form.control}

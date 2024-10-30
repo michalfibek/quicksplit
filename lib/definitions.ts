@@ -3,10 +3,14 @@ import { z } from "zod";
 export const PersonSchema = z.object({
   id: z.string().uuid(),
   name: z.string().min(1),
-  email: z.string().email().optional(),
+  email: z.string().email().nullish(),
 });
 
 export type Person = z.infer<typeof PersonSchema>;
+
+export const PersonsSchema = z.array(PersonSchema);
+
+export type Persons = z.infer<typeof PersonsSchema>;
 
 export const BillSchema = z.object({
   id: z.string().uuid(),
@@ -15,10 +19,10 @@ export const BillSchema = z.object({
   //   console.log(data);
   //   console.log(JSON.stringify(data));
   // }),
-  description: z.string().optional(),
+  description: z.string().max(255).nullish(),
   amount: z.coerce.number().positive(),
   currency: z.string().min(3).max(3),
-  exchangeRate: z.number().positive().optional(),
+  exchangeRate: z.number().positive().nullish(),
   paidBy: PersonSchema,
   sharedWith: z.array(PersonSchema).min(1),
 });
@@ -36,5 +40,4 @@ export type Bill = z.infer<typeof BillSchema>;
 
 export type GroupSettings = {
   baseCurrency: string;
-  people: Person[];
 };

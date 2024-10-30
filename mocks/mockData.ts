@@ -70,7 +70,6 @@ export function getCurrencies(): string[] {
 export function getGroupSettings(): GroupSettings {
   return {
     baseCurrency: "CZK",
-    people: [mockPerson1, mockPerson2, mockPerson3],
   };
 }
 
