@@ -38,6 +38,10 @@ export const BillSchemaRawInput = BillSchemaRaw.extend({
 
 export type Bill = z.infer<typeof BillSchema>;
 
+export const BillsSchema = z.array(BillSchema);
+
+export type Bills = z.infer<typeof BillsSchema>;
+
 export type GroupSettings = {
   baseCurrency: string;
 };

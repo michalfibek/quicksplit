@@ -3,16 +3,17 @@ import { DataTable } from "@/components/table/DataTable";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import MainBlock from "@/components/MainBlock";
-import { getBills } from "@/mocks/mockData";
 import PageHeading from "@/components/PageHeading";
 import { Metadata } from "next";
+import { fetchGroupBills } from "@/lib/data";
 
 export const metadata: Metadata = {
   title: "Dashboard",
 };
 
 export default async function Page() {
-  const bills = await getBills();
+  const bills = await fetchGroupBills();
+  // console.log(bills);
 
   // data test
   // bills.map((d) => {
