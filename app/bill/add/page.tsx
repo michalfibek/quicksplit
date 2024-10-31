@@ -1,3 +1,5 @@
+"use server";
+
 import { CardBox } from "@/components/CardBox";
 import { AddBillForm } from "@/components/form/addBillForm";
 import MainBlock from "@/components/MainBlock";
@@ -5,9 +7,11 @@ import PageHeading from "@/components/PageHeading";
 import { fetchGroupPersons } from "@/lib/data";
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Add Bill",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Add Bill",
+  };
+}
 
 export default async function Page() {
   const fetchedPersons = await fetchGroupPersons();

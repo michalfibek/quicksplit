@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -25,29 +24,21 @@ import {
 
 import { Input } from "@/components/ui/input";
 import {
-  BillSchema,
   BillSchemaRaw,
   BillSchemaRawInput,
   Person,
   Persons,
 } from "@/lib/definitions";
-import Link from "next/link";
 import {
   getCurrencies,
   getGroupSettings,
   getPeople,
   getUserSettings,
 } from "@/mocks/mockData";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { DateTimePicker } from "../ui/datetime-picker";
 import { Checkbox } from "../ui/checkbox";
 import { useEffect, useState } from "react";
 import { createBill } from "@/lib/actions";
-import { fetchGroupPersons } from "@/lib/data";
 
 type AddBillFormProps = {
   personsList: Persons;
@@ -176,7 +167,11 @@ export function AddBillForm({ personsList }: AddBillFormProps) {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder="New office chair" {...field} />
+                <Input
+                  placeholder="New office chair"
+                  {...field}
+                  value={field.value ?? ""}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
