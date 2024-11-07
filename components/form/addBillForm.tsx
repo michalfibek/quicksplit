@@ -26,8 +26,8 @@ import { Input } from "@/components/ui/input";
 import {
   BillSchemaRaw,
   BillSchemaRawInput,
-  Person,
-  Persons,
+  TPerson,
+  TPersons,
 } from "@/lib/definitions";
 import {
   getCurrencies,
@@ -41,11 +41,11 @@ import { useEffect, useState } from "react";
 import { createBill } from "@/lib/actions";
 
 type AddBillFormProps = {
-  personsList: Persons;
+  personsList: TPersons;
 };
 
 export function AddBillForm({ personsList }: AddBillFormProps) {
-  console.log(personsList);
+  // console.log(personsList);
   // const peopleList = getPeople();
   const currencyList = getCurrencies();
   const userSettings = getUserSettings();
@@ -59,7 +59,7 @@ export function AddBillForm({ personsList }: AddBillFormProps) {
       paidBy: userSettings.currentUser.id,
       currency: groupSettings.baseCurrency,
       amount: "",
-      sharedWith: personsList.map((person: Person) => person.id),
+      sharedWith: personsList.map((person: TPerson) => person.id),
     },
   });
 
@@ -103,7 +103,7 @@ export function AddBillForm({ personsList }: AddBillFormProps) {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {personsList.map((person: Person) => (
+                  {personsList.map((person: TPerson) => (
                     <SelectItem key={person.id} value={person.id}>
                       {person.name}
                     </SelectItem>

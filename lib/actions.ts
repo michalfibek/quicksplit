@@ -5,11 +5,11 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { BillSchemaRaw } from "./definitions";
 import { db } from "@/db/drizzle";
-import { bill, billSharedWith, person } from "@/db/schema";
+import { bill, billSharedWith } from "@/db/schema";
 
 export async function createBill(values: z.infer<typeof BillSchemaRaw>) {
   const validatedFields = BillSchemaRaw.safeParse(values);
-  console.log(validatedFields);
+  // console.log(validatedFields);
 
   if (!validatedFields.success) {
     return {

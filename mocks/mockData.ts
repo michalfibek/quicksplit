@@ -1,4 +1,4 @@
-import { Bill, GroupSettings, Person } from "@/lib/definitions";
+import { TBill, TGroupSettings, TPerson } from "@/lib/definitions";
 
 // import { randomUUID } from "crypto";
 // async function getPersons(): Promise<Person[]> {
@@ -10,24 +10,24 @@ import { Bill, GroupSettings, Person } from "@/lib/definitions";
 //   ];
 // }
 
-const mockPerson1 = <Person>{
+const mockPerson1 = <TPerson>{
   id: "d1d5d1e6-d7ae-11eb-b8bc-0242ac130005",
   name: "Anna Peterson",
 };
-const mockPerson2 = <Person>{
+const mockPerson2 = <TPerson>{
   id: "d1abd1e6-d7ae-11eb-b8bc-0242ac130001",
   name: "Johny Doe",
 };
-const mockPerson3 = <Person>{
+const mockPerson3 = <TPerson>{
   id: "a1abd1e6-d0ae-11eb-b8bc-0242ac1300421",
   name: "Frank Johnson",
 };
 
-export function getPeople(): Person[] {
+export function getPeople(): TPerson[] {
   return [mockPerson1, mockPerson2, mockPerson3];
 }
 
-export function getBills(): Bill[] {
+export function getBills(): TBill[] {
   return [
     {
       id: "6972b464-26d6-469c-a301-e7795e08778b",
@@ -67,7 +67,7 @@ export function getCurrencies(): string[] {
   return ["CZK", "USD", "EUR", "PLN"];
 }
 
-export function getGroupSettings(): GroupSettings {
+export function getGroupSettings(): TGroupSettings {
   return {
     baseCurrency: "CZK",
   };

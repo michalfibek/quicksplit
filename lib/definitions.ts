@@ -3,14 +3,14 @@ import { z } from "zod";
 export const PersonSchema = z.object({
   id: z.string().uuid(),
   name: z.string().min(1),
-  email: z.string().email().nullish(),
+  email: z.string().email().nullable(),
 });
 
-export type Person = z.infer<typeof PersonSchema>;
+export type TPerson = z.infer<typeof PersonSchema>;
 
 export const PersonsSchema = z.array(PersonSchema);
 
-export type Persons = z.infer<typeof PersonsSchema>;
+export type TPersons = z.infer<typeof PersonsSchema>;
 
 export const BillSchema = z.object({
   id: z.string().uuid(),
@@ -23,8 +23,9 @@ export const BillSchema = z.object({
   amount: z.coerce.number().positive(),
   currency: z.string().min(3).max(3),
   exchangeRate: z.number().positive().nullish(),
+  amountConverted: z.number().positive().nullish(),
   paidBy: PersonSchema,
-  sharedWith: z.array(PersonSchema).min(1),
+  sharedWith: z.array(PersonSchema),
 });
 
 export const BillSchemaRaw = BillSchema.extend({
@@ -36,12 +37,14 @@ export const BillSchemaRawInput = BillSchemaRaw.extend({
   amount: z.union([z.number(), z.string()]),
 });
 
-export type Bill = z.infer<typeof BillSchema>;
+export type TBill = z.infer<typeof BillSchema>;
 
 export const BillsSchema = z.array(BillSchema);
 
-export type Bills = z.infer<typeof BillsSchema>;
+export type TBills = z.infer<typeof BillsSchema>;
 
-export type GroupSettings = {
-  baseCurrency: string;
+export type TCurrencyCode = string[3];
+
+export type TGroupSettings = {
+  baseCurrency: TCurrencyCode;
 };

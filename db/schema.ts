@@ -50,6 +50,8 @@ export const bill = pgTable(
   })
 );
 
+export type TdataBill = typeof bill.$inferSelect;
+
 export const billPaidByRelations = relations(bill, ({ one }) => ({
   paidBy: one(person, {
     fields: [bill.paidById],

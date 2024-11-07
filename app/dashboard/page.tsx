@@ -7,18 +7,14 @@ import PageHeading from "@/components/PageHeading";
 import { Metadata } from "next";
 import { fetchGroupBills } from "@/lib/data";
 
-export const metadata: Metadata = {
-  title: "Dashboard",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: "Dashboard",
+  };
+}
 
 export default async function Page() {
   const bills = await fetchGroupBills();
-  // console.log(bills);
-
-  // data test
-  // bills.map((d) => {
-  //   console.log(BillSchema.parse(d));
-  // });
 
   return (
     <>
